@@ -8,11 +8,13 @@ import locale
 import requests
 import webbrowser
 
+
 def resource_path(relative_path):
     """Obtaining PyInstaller-enabled resource paths"""
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
+
 
 def get_version():
     try:
@@ -23,7 +25,8 @@ def get_version():
         return None
     except json.JSONDecodeError:
         return None
-    
+
+
 def get_tag():
     url = f"https://api.github.com/repos/samenoko-112/yt-dlpGUI/releases/latest"
     headers = {"Accept": "application/vnd.github.v3+json"}
@@ -35,7 +38,8 @@ def get_tag():
     else:
         return None
 
-def check_update(local_version,latest_version):
+
+def check_update(local_version, latest_version):
     if local_version and latest_version:
         if local_version != latest_version:
             return f"https://github.com/samenoko-112/yt-dlpGUI/releases/tag/{latest_version}"
@@ -44,10 +48,12 @@ def check_update(local_version,latest_version):
     else:
         return None
 
+
 def detect_system_locale():
     """Determine language based on system locale"""
     lang, _ = locale.getdefaultlocale()
     return "ja" if lang and lang.startswith("ja") else "en"
+
 
 def load_locale(locale: str):
     """Load translations in a given language"""
@@ -61,9 +67,11 @@ def load_locale(locale: str):
         print(f"Error: locale/{locale}.json not found")
         translations = {}
 
+
 def t(key: str) -> str:
     """Get Translation Key"""
     return translations.get(key, key)
+
 
 # Keep current language
 current_locale = detect_system_locale()
@@ -72,11 +80,16 @@ translations = {}
 # Detect system locale and load language
 load_locale(detect_system_locale())
 
-outpath = os.path.normpath(os.path.expanduser('~') + "/ytdlp")
+# outpath = os.path.normpath(os.path.expanduser('~') + "/ytdlp")
+outpath = os.path.normpath(os.path.expanduser('~') + "/Music/Youtube")
 cookie = None
 
-mp4_qualitys = [dropdown.Option(key="Auto"), dropdown.Option(key="144p"), dropdown.Option(key="240p"), dropdown.Option(key="360p"), dropdown.Option(key="480p"), dropdown.Option(key="720p"), dropdown.Option(key="1080p"), dropdown.Option(key="1440p"),dropdown.Option(key="2160p")]
-mp3_qualitys = [dropdown.Option(key="Auto"), dropdown.Option(key="128kbps"), dropdown.Option(key="192kbps"), dropdown.Option(key="256kbps"), dropdown.Option(key="320kbps")]
+mp4_qualitys = [dropdown.Option(key="Auto"), dropdown.Option(key="144p"), dropdown.Option(key="240p"),
+                dropdown.Option(key="360p"), dropdown.Option(key="480p"), dropdown.Option(key="720p"),
+                dropdown.Option(key="1080p"), dropdown.Option(key="1440p"), dropdown.Option(key="2160p")]
+mp3_qualitys = [dropdown.Option(key="320kbps"), dropdown.Option(key="128kbps"), dropdown.Option(key="192kbps"),
+                dropdown.Option(key="256kbps"), dropdown.Option(key="Auto")]
+
 
 def main(page: Page):
     page.title = f"yt-dlpGUI - {get_version()}"
@@ -88,9 +101,11 @@ def main(page: Page):
     page.window.icon = resource_path("assets/icon2.ico")
 
     def w_init():
-        latest = check_update(get_version(),get_tag())
+        latest = check_update(get_version(), get_tag())
         if latest:
-            snack_bar = SnackBar(content=Row([Text(t("update_available")),TextButton(t("download_update"),on_click=lambda _: webbrowser.open(latest))]))
+            snack_bar = SnackBar(content=Row([Text(t("update_available")), TextButton(t("download_update"),
+                                                                                      on_click=lambda
+                                                                                          _: webbrowser.open(latest))]))
             page.overlay.append(snack_bar)
             snack_bar.open = True
             page.update()
@@ -117,7 +132,7 @@ def main(page: Page):
             Text(t("about_text").format(version=get_version())),
         ]),
         actions=[
-            TextButton(t("close"),on_click=close_about_dialog)
+            TextButton(t("close"), on_click=close_about_dialog)
         ],
         actions_alignment=MainAxisAlignment.END,
         on_dismiss=lambda e: print("Modal dialog dismissed!"),
@@ -129,18 +144,18 @@ def main(page: Page):
         center_title=False,
         bgcolor=Colors.SURFACE,
         actions=[
-            IconButton(icon=Icons.INFO,on_click=open_about_dialog),
-            IconButton(icon=Icons.REFRESH,on_click=lambda _: w_init())
+            IconButton(icon=Icons.INFO, on_click=open_about_dialog),
+            IconButton(icon=Icons.REFRESH, on_click=lambda _: w_init())
         ]
     )
 
     def change_ext(e):
-        if ext_sel.value == "mp4":
-            quality_sel.options = mp4_qualitys
-            quality_sel.value = mp4_qualitys[0].key
-        elif ext_sel.value == "mp3":
+        if ext_sel.value == "mp3":
             quality_sel.options = mp3_qualitys
             quality_sel.value = mp3_qualitys[0].key
+        elif ext_sel.value == "mp4":
+            quality_sel.options = mp4_qualitys
+            quality_sel.value = mp4_qualitys[0].key
         elif ext_sel.value == "m4a":
             quality_sel.options = mp3_qualitys
             quality_sel.value = mp3_qualitys[0].key
@@ -155,7 +170,7 @@ def main(page: Page):
         outpath = e.path if e.path else before
         outpath_input.value = os.path.normpath(outpath)
         outpath_input.update()
-    
+
     def sel_cookie(e: FilePickerResultEvent):
         global cookie
         if e.files:
@@ -211,7 +226,7 @@ def main(page: Page):
                     status_text.update()
 
                     file = os.path.normpath(remove_ansi_codes(d.get("filename")))
-                    now_title.value = file.replace(outpath+"\\", "")
+                    now_title.value = file.replace(outpath + "\\", "")
                     now_title.update()
 
                 elif d["status"] == "postprocessing":
@@ -227,7 +242,7 @@ def main(page: Page):
                 status_text.update()
 
                 file = os.path.normpath(remove_ansi_codes(d.get("filename")))
-                now_title.value = file.replace(outpath+"\\", "")
+                now_title.value = file.replace(outpath + "\\", "")
                 now_title.update()
 
                 if d["status"] == "postprocessing":
@@ -276,7 +291,8 @@ def main(page: Page):
 
         # Add playlist index to file name
         if playlist_index.value:
-            ydl_opts["outtmpl"] = f"{outpath}/%(playlist_index)02d - %(title)s.%(ext)s" if not playlist.value else f"{outpath}/%(playlist_title)s/%(playlist_index)02d - %(title)s.%(ext)s"
+            ydl_opts[
+                "outtmpl"] = f"{outpath}/%(playlist_index)02d - %(title)s.%(ext)s" if not playlist.value else f"{outpath}/%(playlist_title)s/%(playlist_index)02d - %(title)s.%(ext)s"
 
         # Formatting
         if ext == "mp4":
@@ -417,11 +433,10 @@ def main(page: Page):
             now_title.label = t("processing_file_label")
             now_title.update()
 
-
     outpath_dialog = FilePicker(on_result=sel_path)
     cookie_dialog = FilePicker(on_result=sel_cookie)
 
-    page.overlay.extend([outpath_dialog,cookie_dialog])
+    page.overlay.extend([outpath_dialog, cookie_dialog])
 
     def change_language(e):
         """Change language and redraw UI"""
@@ -454,7 +469,7 @@ def main(page: Page):
             ),
             IconButton(
                 icon=Icons.REFRESH,
-                on_click=lambda _:w_init()
+                on_click=lambda _: w_init()
             )
         ]
         about_dialog.title = Text(t("about_title"))
@@ -462,7 +477,7 @@ def main(page: Page):
             Text(t("about_text").format(version=get_version())),
         ])
         about_dialog.actions = [
-            TextButton(t("close"),on_click=close_about_dialog)
+            TextButton(t("close"), on_click=close_about_dialog)
         ]
         page.update()
 
@@ -498,8 +513,8 @@ def main(page: Page):
     ext_sel = Dropdown(
         label=t("extension_label"),
         options=[
-            dropdown.Option(key="mp4", text="MP4"),
             dropdown.Option(key="mp3", text="MP3"),
+            dropdown.Option(key="mp4", text="MP4"),
             dropdown.Option(key="m4a", text="M4A"),
             dropdown.Option(key="wav", text="WAV"),
             dropdown.Option(key="opus", text="OPUS"),
@@ -508,13 +523,13 @@ def main(page: Page):
         ],
         expand=True,
         on_change=change_ext,
-        value="mp4"
+        value="mp3"
     )
     quality_sel = Dropdown(
         label=t("quality_label"),
         expand=True,
-        options=mp4_qualitys,
-        value=mp4_qualitys[0].key
+        options=mp3_qualitys,
+        value=mp3_qualitys[0].key
     )
     playlist = Switch(label=t("playlist_title_switch"))
     playlist_index = Switch(label=t("playlist_index_switch"))
