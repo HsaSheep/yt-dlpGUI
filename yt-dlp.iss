@@ -1,6 +1,6 @@
 [Setup]
 AppName=yt-dlpGUI
-AppVersion=2.3.5
+AppVersion=2.3.5-1.0
 DefaultDirName={pf}\yt-dlpGUI
 DefaultGroupName=yt-dlpGUI
 OutputBaseFilename=yt-dlpGUI_Installer

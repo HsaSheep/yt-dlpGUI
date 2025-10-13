@@ -28,7 +28,7 @@ def get_version():
 
 
 def get_tag():
-    url = f"https://api.github.com/repos/samenoko-112/yt-dlpGUI/releases/latest"
+    url = f"https://api.github.com/repos/HsaSheep/yt-dlpGUI/releases/latest"
     headers = {"Accept": "application/vnd.github.v3+json"}
     response = requests.get(url, headers=headers)
 
@@ -42,7 +42,7 @@ def get_tag():
 def check_update(local_version, latest_version):
     if local_version and latest_version:
         if local_version != latest_version:
-            return f"https://github.com/samenoko-112/yt-dlpGUI/releases/tag/{latest_version}"
+            return f"https://github.com/HsaSheep/yt-dlpGUI/releases/tag/{latest_version}"
         else:
             return None
     else:
@@ -538,7 +538,7 @@ def main(page: Page):
         expand=True,
         read_only=True
     )
-    add_thumbnail = Switch(label=t("add_thumbnail_switch"))
+    add_thumbnail = Switch(label=t("add_thumbnail_switch"), value=True)
     cookie_btn = TextButton(
         text=t("select_button"),
         icon=Icons.COOKIE,
