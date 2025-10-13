@@ -17,6 +17,9 @@ yt-dlpをGUIで使いやすくしたやつです。
 - ffmpeg
 
 > Windows環境でのインストール
+> 基本的には管理者権限がなくても実行できるはずです…
+> Windowsキー + Rキーを押す。（「ファイル名を指定して実行」を開く）
+> 開いたら「cmd」と入力してEnterキーを押す。 
 > ```bash:ターミナル
 > winget install Gyan.FFmpeg
 > ```
