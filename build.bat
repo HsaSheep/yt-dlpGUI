@@ -1,5 +1,10 @@
 @echo off
 
+REM Shift-JIS
+REM chcp 932
+REM UTF-8
+REM chcp 65001
+
 REM バージョン番号を入力
 set /p version="Enter the version number (e.g., 2.3): "
 
@@ -22,6 +27,9 @@ tar -xf "%ffmpeg_zip%" -C "%ffmpeg_dir%" --strip-components=1
 
 if exist "dist" rmdir /s /q "dist"
 if exist "build" rmdir /s /q "build"
+
+REM venv に入る
+pipenv shell
 
 REM PyInstallerで実行ファイルをビルド（yt-dlpGUI.exe）
 pyinstaller --name yt-dlpGUI -F -w --icon=assets/icon2.ico --add-data "locale;locale" --add-data "assets;assets" --noconfirm --clean main.py

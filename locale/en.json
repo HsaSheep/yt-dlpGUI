@@ -30,6 +30,6 @@
     "enable_hdr": "Prefer HDR",
     "use_aria2c": "Use Aria2",
     "about_title": "About",
-    "about_text": "Version: {version}\nDeveloper: samenoko-112\nContributor: reindex-ot",
+    "about_text": "Version: {version}\nyt-dlp Ver.: {ytdlpversion}\n\nDeveloper: samenoko-112\nContributor: reindex-ot\nKobo Mod: HsaSheep\n\n  !Touch and die!",
     "close": "Close"
 }

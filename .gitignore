@@ -1,13 +1,16 @@
 downloads/
-.DS_Store
 dist/
 build/
-.DS_Store
-*.ico
-*_setup.exe
 Output/
 ffmpeg/
 ffmpeg.zip
+.DS_Store
+*.ico
+*_setup.exe
 test.py
 *.mp4
 *.spec
+
+# add HsaSheep(PyCharm)
+/.idea/
+Pipfile

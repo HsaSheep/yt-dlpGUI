@@ -30,6 +30,6 @@
     "enable_hdr": "优先使用HDR",
     "use_aria2c": "使用Aria2",
     "about_title": "关于",
-    "about_text": "版本: {version}\n开发者: samenoko-112\n贡献者: reindex-ot",
+    "about_text": "版本: {version}\nyt-dlp版本: {ytdlpversion}\n\n开发者: samenoko-112\n贡献者: reindex-ot\n科博专用改造：HsaSheep\n\n  !碰了就杀!",
     "close": "关闭"
 }

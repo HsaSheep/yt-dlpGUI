@@ -1,3 +1,5 @@
+import importlib.metadata
+
 from flet import *
 from yt_dlp import YoutubeDL
 import re
@@ -21,6 +23,15 @@ def get_version():
         with open(resource_path("assets/version.json"), "r", encoding="utf-8") as f:
             data = json.load(f)
             return data.get("version")
+    except FileNotFoundError:
+        return None
+    except json.JSONDecodeError:
+        return None
+
+
+def get_yt_dlp_version():
+    try:
+        return str(importlib.metadata.version('yt_dlp'))
     except FileNotFoundError:
         return None
     except json.JSONDecodeError:
@@ -129,7 +140,7 @@ def main(page: Page):
     about_dialog = AlertDialog(
         title=Text(t("about_title")),
         content=Column([
-            Text(t("about_text").format(version=get_version())),
+            Text(t("about_text").format(version=get_version(), ytdlpversion=get_yt_dlp_version())),
         ]),
         actions=[
             TextButton(t("close"), on_click=close_about_dialog)

@@ -32,6 +32,6 @@
     "about_button": "このアプリについて",
     "update_button": "アップデートを確認",
     "about_title": "このアプリについて",
-    "about_text": "バージョン: {version}\n制作者: samenoko-112\n貢献者: reindex-ot",
+    "about_text": "バージョン: {version}\nyt-dlpバージョン: {ytdlpversion}\n\n制作者: samenoko-112\n貢献者: reindex-ot\nコボ用改造: HsaSheep\n\n  !さわったらころす!",
     "close": "閉じる"
 }
