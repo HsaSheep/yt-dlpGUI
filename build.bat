@@ -1,12 +1,42 @@
 @echo off
-
+setlocal enabledelayedexpansion
 REM Shift-JIS
 REM chcp 932
 REM UTF-8
 chcp 65001
 
+set "version_json_file=%~dp0assets\version.json"
+
+cd %~dp0
+
+:: ファイルが存在するかチェック
+if not exist "%version_json_file%" (
+    echo [エラー] JSONファイルが見つかりません: %version_json_file%
+    pause
+    exit /b
+)
+
+echo [デバッグ] PowerShellを呼び出しています...
+for /f "usebackq delims=" %%a in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "$json = Get-Content -LiteralPath '%version_json_file%' -Raw | ConvertFrom-Json; if ($json.version) { $json.version } else { 'DEBUG_EMPTY' }"`) do (
+    set "version=%%a"
+)
+
+:: 結果判定
+if "!version!"=="DEBUG_EMPTY" (
+    echo [エラー] JSONは読み込めましたが、'version' キーが見つからないか空です。
+    echo JSONのキー名が正確に "version" であるか確認してください。
+) else if not defined version (
+    echo [エラー] PowerShellからの出力が全くありません。
+    echo JSONファイルが破損しているか、文字コードの問題の可能性があります。
+) else (
+    echo 成功！取得した値: !version!
+    rem exit /b
+)
+
+rem pause
+
 REM バージョン番号を入力
-set /p version="Enter the version number (e.g., 2.3): "
+rem set /p version="Enter the version number (e.g., 2.3): "
 
 REM LGPLビルドのFFmpegダウンロードURL
 set ffmpeg_url=https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-lgpl.zip

@@ -1,6 +1,6 @@
 [Setup]
 AppName=yt-dlpGUI
-AppVersion=v2.3.5-1.2-kobo
+AppVersion=v2.3.5-1.3-kobo
 DefaultDirName={pf}\yt-dlpGUI
 DefaultGroupName=yt-dlpGUI
 OutputBaseFilename=yt-dlpGUI_Installer

@@ -61,10 +61,18 @@ HDRの動画を優先します。
 ## 自分でビルド
 pyinstallerを使いビルドできます。
 
-このリポジトリをクローンしてカレントディレクトリを移動、そこで
-```bash:
-pyinstaller yt-dlpGUI.spec
+1. このリポジトリをクローンしてカレントディレクトリを移動
+2. requirements.txtのpackage等をインストール
+3. そこで下記コマンドを実行（Windows用アプリのため、Windows上でPS or コマンドプロンプト想定）
+
+```commandline:
+ PS> .\build.bat
 ```
+
+> ### 下記が元のスクリプト
+> ```bash:
+> pyinstaller yt-dlpGUI.spec
+> ```
 
 を実行してください。  
 `/dist`に保存されます。

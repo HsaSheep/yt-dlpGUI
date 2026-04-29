@@ -38,6 +38,15 @@ def get_yt_dlp_version():
         return None
 
 
+def get_flet_version():
+    try:
+        return str(importlib.metadata.version('flet'))
+    except FileNotFoundError:
+        return None
+    except json.JSONDecodeError:
+        return None
+
+
 def get_tag():
     url = f"https://api.github.com/repos/HsaSheep/yt-dlpGUI/releases/latest"
     headers = {"Accept": "application/vnd.github.v3+json"}
@@ -110,6 +119,10 @@ def main(page: Page):
     page.window.min_height = 900
     page.window.min_width = 500
     page.window.icon = resource_path("assets/icon2.ico")
+    page.fonts = {
+        "KosugiMaru": "fonts/KosugiMaru-Regular.ttf"
+    }
+    page.theme = Theme(font_family="KosugiMaru")
 
     def w_init():
         latest = check_update(get_version(), get_tag())
@@ -140,7 +153,7 @@ def main(page: Page):
     about_dialog = AlertDialog(
         title=Text(t("about_title")),
         content=Column([
-            Text(t("about_text").format(version=get_version(), ytdlpversion=get_yt_dlp_version())),
+            Text(t("about_text").format(version=get_version(), ytdlpversion=get_yt_dlp_version(),fletversion=get_flet_version())),
         ]),
         actions=[
             TextButton(t("close"), on_click=close_about_dialog)
@@ -485,7 +498,7 @@ def main(page: Page):
         ]
         about_dialog.title = Text(t("about_title"))
         about_dialog.content = Column([
-            Text(t("about_text").format(version=get_version())),
+            Text(t("about_text").format(version=get_version(), ytdlpversion=get_yt_dlp_version(),fletversion=get_flet_version())),
         ])
         about_dialog.actions = [
             TextButton(t("close"), on_click=close_about_dialog)
