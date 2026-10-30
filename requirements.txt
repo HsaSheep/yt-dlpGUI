@@ -3,4 +3,4 @@ flet-cli==0.28.3
 flet-desktop==0.28.3
 mutagen>=1.47.0
 requests>=2.33.1
-yt-dlp>=2026.8.19
+yt-dlp>=2026.10.26
