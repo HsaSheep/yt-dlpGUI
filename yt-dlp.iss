@@ -1,7 +1,7 @@
 [Setup]
 AppName=yt-dlpGUI
-AppVersion=v2.3.5-1.5-kobo
-DefaultDirName={pf}\yt-dlpGUI
+AppVersion=v2.3.5-1.6-kobo
+DefaultDirName={autopf}\yt-dlpGUI
 DefaultGroupName=yt-dlpGUI
 OutputBaseFilename=yt-dlpGUI_Installer
 Compression=lzma
@@ -15,6 +15,7 @@ Source: "dist\yt-dlpGUI.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dist\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
 Source: "ffmpeg\bin\ffmpeg.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ffmpeg\bin\ffprobe.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "deno\deno.exe"; DestDir: "{app}"; Flags: ignoreversion
 [Icons]
 Name: "{group}\yt-dlpGUI"; Filename: "{app}\yt-dlpGUI.exe"
 Name: "{commondesktop}\yt-dlpGUI"; Filename: "{app}\yt-dlpGUI.exe"; Tasks: desktopicon

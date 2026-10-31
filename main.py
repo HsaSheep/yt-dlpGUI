@@ -293,6 +293,7 @@ def main(page: Page):
             "quiet": False,
             "ignoreerrors": True,
             "default_search": "ytsearch",
+            "remote_components": ["ejs:github"],
         }
 
         # cookie file
@@ -602,5 +603,40 @@ def main(page: Page):
         status_text
     )
 
+
+class Logger(object):
+    def __init__(self, filename="debug.log"):
+        # 元の stdout が None の場合は、Nullオブジェクトを用意
+        self.terminal = sys.stdout if sys.stdout is not None else self
+        self.log = None
+        try:
+            # ユーザーフォルダ（AppData\Local\yt-dlpGUI）にログを保存
+            log_dir = os.path.join(os.environ["LOCALAPPDATA"], "yt-dlpGUI")
+            if not os.path.exists(log_dir):
+                os.makedirs(log_dir)
+
+            log_path = os.path.join(log_dir, filename)
+            self.log = open(log_path, "a", encoding="utf-8", buffering=1)
+        except Exception:
+            pass
+
+    def write(self, message):
+        # コンソールが存在するときだけ書く
+        if self.terminal is not self:
+            self.terminal.write(message)
+        # ログファイルが存在するときはファイルに書く
+        if self.log:
+            self.log.write(message)
+
+    def flush(self):
+        if self.terminal is not self and hasattr(self.terminal, "flush"):
+            self.terminal.flush()
+        if self.log:
+            self.log.flush()
+
+
+# sys.stdout (通常のprint) と sys.stderr (エラーや警告、yt-dlpのログ) のリダイレクト（Tee）
+sys.stdout = Logger()
+sys.stderr = sys.stdout
 
 app(target=main)

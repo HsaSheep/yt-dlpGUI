@@ -11,7 +11,12 @@ ffmpeg.zip
 test.py
 *.mp4
 *.spec
+*.old
+*.log
+*.exe
+*.zip
 requirements*.txt
+ffmpeg_last_id.txt
 
 # add HsaSheep(PyCharm)
 /.idea/
